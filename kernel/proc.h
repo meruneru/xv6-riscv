@@ -80,6 +80,10 @@ struct trapframe {
   /* 280 */ uint64 t6;
 };
 
+struct usyscall{
+  int pid;
+};
+
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
 // Per-process state
@@ -106,4 +110,5 @@ struct proc {
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
   int mask;                    // trace mask
+  struct usyscall *usyscall;
 };

@@ -134,3 +134,18 @@ memcpy(void *dst, const void *src, uint n)
 {
   return memmove(dst, src, n);
 }
+
+#include "kernel/memlayout.h"
+#include "kernel/spinlock.h"
+#include "kernel/param.h"
+#include "kernel/riscv.h"
+#include "kernel/proc.h"
+
+// speed up getpid
+int
+ugetpid(void){
+  struct usyscall* p = (struct usyscall*)USYSCALL;
+  return p->pid;
+}
+
+

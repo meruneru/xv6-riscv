@@ -136,6 +136,7 @@ UPROGS=\
 	$U/_pinpon \
 	$U/_trace \
 	$U/_sysinfotest \
+  $U/_usyscallTest \
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

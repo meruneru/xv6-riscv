@@ -432,3 +432,28 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
     return -1;
   }
 }
+
+// private func for vmprint
+void vmprintlevel(pagetable_t page, int level){
+  char* delim = 0;
+  if(level==2) delim = "..";
+  if(level==1) delim = ".. ..";
+  if(level==0) delim = ".. .. ..";
+
+  for(int i = 0; i < 512; i++){
+    pte_t pte = page[i];
+    if(pte & PTE_V){
+      printf("%s%d: pte %p pa %p\n", delim, i, pte, PTE2PA(pte));
+      uint64 child = PTE2PA(pte);
+      if(level!=0){
+        vmprintlevel((pagetable_t)child, level-1);
+      }
+    }
+  }
+}
+
+// print pagetable
+void vmprint(pagetable_t page){
+  printf("page table %p\n", page);
+  vmprintlevel(page, 2);
+}
